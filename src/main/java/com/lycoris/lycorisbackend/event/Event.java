@@ -7,10 +7,21 @@ public class Event {
     private Time end;
     private Room room;
     private String name;
+    private int duration;
     private Activity activity;
 
     //si salle spécifiée
     public Event(Time begin, Time end, Room room, String name, Activity activity) {
+        this.begin = begin;
+        this.end = end;
+        this.room = room;
+        this.name = name;
+        this.activity = activity;
+        duration = end.timeSince(begin);
+    }
+
+    //si aucune durée et salle
+    public Event(Time duration, String name, Activity activity) {
         this.begin = begin;
         this.end = end;
         this.room = room;
@@ -47,8 +58,8 @@ public class Event {
         return activity;
     }
 
-    public Double getDuration() {
-        return Double.valueOf((end.getHeures() - begin.getHeures()) * 60 + (end.getMinutes() - begin.getMinutes()));
+    public int getDuration() {
+        return end.timeSince(begin);
     }
 
     public void setBegin(Time begin) {
