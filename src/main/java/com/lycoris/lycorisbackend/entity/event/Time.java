@@ -1,4 +1,4 @@
-package com.lycoris.lycorisbackend.event;
+package com.lycoris.lycorisbackend.entity.event;
 
 public class Time {
 

@@ -24,8 +24,8 @@ dependencies {
 	// Spring Data JPA
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 
-	// MySQL Driver
-	compileOnly group: 'mysql', name: 'mysql-connector-java', version: 'VERSION'
+	//Postgres Database
+	implementation 'org.postgresql:postgresql'
 
 	// Lombok
 	compileOnly 'org.projectlombok:lombok'

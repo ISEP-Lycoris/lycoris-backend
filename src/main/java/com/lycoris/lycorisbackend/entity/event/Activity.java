@@ -1,13 +1,31 @@
-package com.lycoris.lycorisbackend.event;
+package com.lycoris.lycorisbackend.entity.event;
 
-import com.lycoris.lycorisbackend.person.Person;
+import com.lycoris.lycorisbackend.entity.person.Person;
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
-
+@Entity
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Activity {
-    private List<Person> animators= new ArrayList<>();
-    private List<Person> spectators=new ArrayList<>();
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column
+    private Long id;
+
+    @ManyToMany
+    private List<Person> animators;
+
+    @ManyToMany
+    private List<Person> spectators;
 
     public List<Person> getAnimator() {
         return animators;

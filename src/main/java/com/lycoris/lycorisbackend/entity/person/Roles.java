@@ -1,4 +1,4 @@
-package com.lycoris.lycorisbackend.person;
+package com.lycoris.lycorisbackend.entity.person;
 
 public enum Roles {
     ANIMATOR,
