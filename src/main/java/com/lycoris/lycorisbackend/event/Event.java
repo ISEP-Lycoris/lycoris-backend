@@ -9,6 +9,7 @@ public class Event {
     private String name;
     private Activity activity;
 
+    //si salle spécifiée
     public Event(Time begin, Time end, Room room, String name, Activity activity) {
         this.begin = begin;
         this.end = end;
@@ -16,6 +17,15 @@ public class Event {
         this.name = name;
         this.activity = activity;
     }
+
+    //si aucune salle spécifiée
+    public Event(Time begin, Time end, String name, Activity activity) {
+        this.begin = begin;
+        this.end = end;
+        this.name = name;
+        this.activity = activity;
+    }
+
 
     public Time getBegin() {
         return begin;
@@ -39,5 +49,34 @@ public class Event {
 
     public Double getDuration() {
         return Double.valueOf((end.getHeures() - begin.getHeures()) * 60 + (end.getMinutes() - begin.getMinutes()));
+    }
+
+    public void setBegin(Time begin) {
+        this.begin = begin;
+    }
+
+    public void setEnd(Time end) {
+        this.end = end;
+    }
+
+    public void setRoom(Room room) {
+        this.room = room;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setActivity(Activity activity) {
+        this.activity = activity;
+    }
+
+    public void printEventInfo() {
+        System.out.println("event name: " + this.name +
+                "\n event Room: " + this.room.getName() +
+                "\n animator: " + this.activity.getAnimator().get(0).getFirstName() + " " + this.activity.getAnimator().get(0).getLastName() +
+                "\n duration: " + this.getDuration() +
+                "\n spectator: " + this.activity.getSpectators().get(0).getFirstName() + " " + this.activity.getSpectators().get(0).getLastName()
+        );
     }
 }

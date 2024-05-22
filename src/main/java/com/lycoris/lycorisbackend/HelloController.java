@@ -30,14 +30,15 @@ public class HelloController {
 
         Activity activity = new Activity(Collections.singletonList(animator), Collections.singletonList(spectator));
 
-        Event event = new Event(new Time(10,0,0),(new Time(11,30,0)), room, "Event 1", activity);
+        Event event = new Event(new Time(10,0,0),(new Time(11,30,0)), room, "activity 1", activity);
         room.addEvent(event);
 
         return ("event name: "+event.getName()+
                 "\n event Room: "+ event.getRoom().getName()+
                 "\n animator: "+event.getActivity().getAnimator().get(0).getFirstName()+" "+event.getActivity().getAnimator().get(0).getLastName() +
                 "\n duration: "+event.getDuration()+
-                "\n spectator: "+event.getActivity().getSpectators().get(0).getFirstName()+" "+event.getActivity().getSpectators().get(0).getLastName());
+                "\n spectator: "+event.getActivity().getSpectators().get(0).getFirstName()+" "+event.getActivity().getSpectators().get(0).getLastName()
+        );
 
     }
 }
