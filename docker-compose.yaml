@@ -1,0 +1,14 @@
+version: "3.9"
+services:
+  postgres:
+    image: 'postgres:latest'
+    ports:
+      - "5435:5432"
+    environment:
+        POSTGRES_USER: 'dev'
+        POSTGRES_PASSWORD: 'dev'
+        POSTGRES_DB: 'db'
+        PGDATA: /mnt/data
+    volumes:
+      - ./db_vol_docker/_data:/mnt/data
+
