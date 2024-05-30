@@ -1,36 +1,39 @@
-package com.lycoris.lycorisbackend.entity.person;
+    package com.lycoris.lycorisbackend.entity.person;
 
-import jakarta.persistence.*;
-import lombok.Data;
+    import jakarta.persistence.*;
+    import lombok.*;
 
-@Entity
-@Data
-public class Person {
+    @Entity
+    @Data
+    @NoArgsConstructor
+    @AllArgsConstructor
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column
-    private Long id;
+    public class Person {
 
-    @Column
-    private String lastName;
-    @Column
-    private String firstName;
-    @Column
-    private Roles role;
+        @Id
+        @GeneratedValue(strategy = GenerationType.AUTO)
+        @Column
+        private Long id;
 
-    @Column
-    private String firstChoice="";
-    @Column
-    private String secondChoice="";
-    @Column
-    private String thirdChoice="";
+        @Column
+        private String lastName;
+        @Column
+        private String firstName;
+        @Column
+        private Roles role;
+
+        @Column
+        private String firstChoice="";
+        @Column
+        private String secondChoice="";
+        @Column
+        private String thirdChoice="";
 
 
-    public void addChoices(String firstChoice, String secondChoice, String thirdChoice) {
-        this.firstChoice = firstChoice;
-        this.secondChoice = secondChoice;
-        this.thirdChoice = thirdChoice;
+        public void addChoices(String firstChoice, String secondChoice, String thirdChoice) {
+            this.firstChoice = firstChoice;
+            this.secondChoice = secondChoice;
+            this.thirdChoice = thirdChoice;
+        }
+
     }
-
-}

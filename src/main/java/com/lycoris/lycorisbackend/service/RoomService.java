@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class RoomService {
@@ -31,7 +32,10 @@ public class RoomService {
     }
 
     public List<Room> getRoomsByCapacity(Integer capacity) {
-        return roomRepository.findByRoomCapacityGreaterThanEqual(capacity);
+        List<Room> allRooms = roomRepository.findAll();
+        return allRooms.stream()
+                .filter(room -> room.getRoomCapacity() >= capacity)
+                .collect(Collectors.toList());
     }
 
     public Room saveRoom(Room room) {

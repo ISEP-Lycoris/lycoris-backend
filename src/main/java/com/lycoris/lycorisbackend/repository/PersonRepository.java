@@ -31,6 +31,6 @@ public interface PersonRepository extends CrudRepository<Person, Long> {
     // Find by third choice
     List<Person> findByThirdChoice(String thirdChoice);
 
-    // Find all persons with a specific role and first choice
-    List<Person> findByRoleAndFirstChoice(Roles role, String firstChoice);
+    List<Person> findByFirstNameAndLastNameAndRole(String firstName, String lastName, Roles role);
+
 }

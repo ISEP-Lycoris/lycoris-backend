@@ -51,9 +51,10 @@ public class PersonService {
         return personRepository.findByThirdChoice(thirdChoice);
     }
 
-    // Find all persons with a specific role and first choice
-    public List<Person> getPersonsByRoleAndFirstChoice(Roles role, String firstChoice) {
-        return personRepository.findByRoleAndFirstChoice(role, firstChoice);
+    // Find by first name, last name, and role
+    public List<Person> getPersonsByFirstNameAndLastNameAndRole(String firstName, String lastName, Roles role) {
+        List<Person> persons = personRepository.findByFirstNameAndLastNameAndRole(firstName, lastName, role);
+        return persons;
     }
 
     // Save a new person

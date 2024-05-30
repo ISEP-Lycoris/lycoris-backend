@@ -91,8 +91,4 @@ public class PersonController {
         return personService.getPersonsByThirdChoice(thirdChoice);
     }
 
-    @GetMapping("/roleandfirstchoice")
-    public List<Person> getPersonsByRoleAndFirstChoice(@RequestParam Roles role, @RequestParam String firstChoice) {
-        return personService.getPersonsByRoleAndFirstChoice(role, firstChoice);
-    }
 }
