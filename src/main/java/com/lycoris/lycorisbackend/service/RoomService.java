@@ -38,6 +38,14 @@ public class RoomService {
                 .collect(Collectors.toList());
     }
 
+    public List<Room> getAvailableRooms() {
+        return roomRepository.findByDisponible(true);
+    }
+
+    public List<Room> getUnavailableRooms() {
+        return roomRepository.findByDisponible(false);
+    }
+
     public Room saveRoom(Room room) {
         return roomRepository.save(room);
     }

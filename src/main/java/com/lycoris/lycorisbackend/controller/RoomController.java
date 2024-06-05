@@ -42,6 +42,16 @@ public class RoomController {
         return roomService.getRoomsByCapacity(capacity);
     }
 
+    @GetMapping("/available")
+    public List<Room> getAvailableRooms() {
+        return roomService.getAvailableRooms();
+    }
+
+    @GetMapping("/unavailable")
+    public List<Room> getUnavailableRooms() {
+        return roomService.getUnavailableRooms();
+    }
+
     @PostMapping
     public Room createRoom(@RequestBody Room room) {
         return roomService.saveRoom(room);

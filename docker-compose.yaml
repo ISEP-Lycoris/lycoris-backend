@@ -5,10 +5,9 @@ services:
     ports:
       - "5435:5432"
     environment:
-        POSTGRES_USER: 'dev'
-        POSTGRES_PASSWORD: 'dev'
-        POSTGRES_DB: 'db'
-        PGDATA: /mnt/data
+      POSTGRES_USER: 'dev'
+      POSTGRES_PASSWORD: 'dev'
+      POSTGRES_DB: 'db'
+      PGDATA: /mnt/data
     volumes:
       - ./db_vol_docker/_data:/mnt/data
-

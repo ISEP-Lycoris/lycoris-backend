@@ -14,4 +14,7 @@ public interface RoomRepository extends JpaRepository<Room, Long> {
 
     // Find rooms with a capacity greater than or equal to the specified value
     List<Room> findByRoomCapacityGreaterThanEqual(Integer capacity);
+
+    // Find rooms by their availability status
+    List<Room> findByDisponible(boolean disponible);
 }

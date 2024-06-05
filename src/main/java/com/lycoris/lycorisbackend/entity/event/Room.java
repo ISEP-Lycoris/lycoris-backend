@@ -1,11 +1,7 @@
 package com.lycoris.lycorisbackend.entity.event;
 
-import com.lycoris.lycorisbackend.entity.event.Event;
 import jakarta.persistence.*;
 import lombok.*;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Data
@@ -20,8 +16,10 @@ public class Room {
 
     @Column(nullable = false, unique = true)
     private String name;
-    
 
     @Column(nullable = false)
     private Integer roomCapacity;
+
+    @Column(nullable = false)
+    private boolean disponible;
 }
