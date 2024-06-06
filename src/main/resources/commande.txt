@@ -43,3 +43,14 @@ Post at http://localhost:8081/events
   "room_id": 252,
   "activity_id": 102
 }
+
+
+google form inscription
+https://forms.gle/ksinEruvizRi39oP7
+
+get data from datasheet
+GEt http://localhost:8081/get-sheet-data
+
+update datbase with data from spreadsheet
+http://localhost:8081/persons/add-from-sheet
+as body the result of http://localhost:8081/get-sheet-data

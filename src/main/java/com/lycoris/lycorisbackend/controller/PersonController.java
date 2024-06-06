@@ -7,7 +7,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -91,4 +93,42 @@ public class PersonController {
         return personService.getPersonsByThirdChoice(thirdChoice);
     }
 
+    private static final Map<String, Roles> ROLE_MAP = new HashMap<>();
+    static {
+        ROLE_MAP.put("Spectateur", Roles.SPECTATOR);
+        ROLE_MAP.put("Animateur", Roles.ANIMATOR);
+    }
+
+    // Your existing controller methods...
+
+    @PostMapping("/add-from-sheet")
+    public ResponseEntity<String> addPersonsFromSheet(@RequestBody List<List<String>> sheetData) {
+        for (List<String> rowData : sheetData) {
+            String firstName = rowData.get(0);
+            String lastName = rowData.get(1);
+            String roleString = rowData.get(2);
+
+            // Convert role string to enum
+            Roles role = ROLE_MAP.get(roleString);
+
+            if (role == null) {
+                // Role not found in map
+                return ResponseEntity.badRequest().body("Invalid role: " + roleString);
+            }
+
+            // Check if person already exists in the database
+            List<Person> existingPersons = personService.getPersonsByFirstNameAndLastName(firstName, lastName);
+
+            if (existingPersons.isEmpty()) {
+                // Person does not exist, create a new one
+                Person person = new Person();
+                person.setFirstName(firstName);
+                person.setLastName(lastName);
+                person.setRole(role);
+                personService.savePerson(person);
+            }
+        }
+
+        return ResponseEntity.ok("Persons added from sheet successfully.");
+    }
 }
