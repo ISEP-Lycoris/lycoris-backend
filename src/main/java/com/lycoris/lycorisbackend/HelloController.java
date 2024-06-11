@@ -30,7 +30,7 @@ public class HelloController {
 
         Activity activity = new Activity(Collections.singletonList(animator), Collections.singletonList(spectator));
 
-        Event event = new Event(new Time(10,0),(new Time(11,30)), room, "activity 1", activity);
+        Event event = new Event(new Time(2024,1,12,13,20),(new Time(2024,1,12,13,25)), room, "activity 1", activity);
         room.addEvent(event);
 
         return ("event name: "+event.getName()+

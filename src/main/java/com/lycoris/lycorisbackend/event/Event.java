@@ -20,11 +20,9 @@ public class Event {
         duration = end.timeSince(begin);
     }
 
-    //si aucune durée et salle
-    public Event(Time duration, String name, Activity activity) {
-        this.begin = begin;
-        this.end = end;
-        this.room = room;
+    //si aucun horraire et salle
+    public Event(int duration, String name, Activity activity) {
+        this.duration = duration;
         this.name = name;
         this.activity = activity;
     }
@@ -35,6 +33,14 @@ public class Event {
         this.end = end;
         this.name = name;
         this.activity = activity;
+    }
+
+    //si aucun horraire
+    public Event(int duration,Room room, String name, Activity activity) {
+        this.duration = duration;
+        this.name = name;
+        this.activity = activity;
+        this.room = room;
     }
 
 
@@ -50,6 +56,10 @@ public class Event {
         return room;
     }
 
+    public void addRoom(Room room) {
+        this.room = room;
+    }
+
     public String getName() {
         return name;
     }
@@ -59,6 +69,8 @@ public class Event {
     }
 
     public int getDuration() {
+        if(duration!=0) return duration;
+        duration = end.timeSince(begin);
         return end.timeSince(begin);
     }
 

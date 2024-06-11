@@ -6,6 +6,7 @@ import java.util.List;
 public class Room {
     private String name;
     private List<Event> events= new ArrayList<>();
+    private List<Event> unsortedEvents= new ArrayList<>();
     private Integer roomCapacity;
 
     public Room(String name, Integer roomCapacity) {
@@ -21,11 +22,9 @@ public class Room {
         return events;
     }
 
-    public Integer getRoomCapacity() {
-        return roomCapacity;
-    }
-
     public void addEvent(Event event) {
         this.events.add(event);
     }
+
+
 }

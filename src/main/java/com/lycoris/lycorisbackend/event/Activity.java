@@ -6,8 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Activity {
-    private List<Person> animators= new ArrayList<>();
-    private List<Person> spectators=new ArrayList<>();
+    private List<Person> animators = new ArrayList<>();
+    private List<Person> spectators = new ArrayList<>();
 
     public List<Person> getAnimator() {
         return animators;
