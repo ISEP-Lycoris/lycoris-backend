@@ -15,9 +15,11 @@ Post at http://localhost:8081/rooms
 Create a Person
 Post at http://localhost:8081/persons
 {
-    "firstName": "John",
-    "lastName": "Doe",
-    "role": "SPECTATOR"
+    "name": "Room Name",
+    "roomCapacity": 50,
+    "disponible": true,
+    "ouvertureTime": "09:00:00",
+    "fermetureTime": "18:00:00"
 }
 
 Create a activity
@@ -34,15 +36,28 @@ Post at http://localhost:8081/activities/'id'/spectators
     "role": "SPECTATOR"
 }
 
-Create Event
+Create Event with no time
 Post at http://localhost:8081/events
 {
-  "begin_time": "10:00:00",
-  "end_time": "12:00:00",
-  "name": "Yoga class",
-  "room_id": 252,
-  "activity_id": 102
+    "name": "Event Name",
+    "roomId": 402,
+    "activityId": 202,
+    "duration": 60,
+    "beginTime": null,
+    "endTime": null
 }
+
+Create Event with time
+Post at http://localhost:8081/events
+{
+    "name": "Event Name",
+    "roomId": 1,
+    "activityId": 1,
+    "duration": 60,
+    "beginTime": "09:00:00",
+    "endTime": "10:00:00"
+}
+
 
 
 google form inscription
@@ -54,3 +69,120 @@ GEt http://localhost:8081/get-sheet-data
 update datbase with data from spreadsheet
 http://localhost:8081/persons/add-from-sheet
 as body the result of http://localhost:8081/get-sheet-data
+
+
+Post at http://localhost:8081/schedule-events
+
+{
+    //result of get rooms
+    "rooms": [
+        {
+            "id": 402,
+            "name": "Room Name",
+            "roomCapacity": 50,
+            "disponible": true,
+            "ouvertureTime": "09:00:00",
+            "fermetureTime": "18:00:00"
+        },
+        {
+            "id": 452,
+            "name": "Room 2",
+            "roomCapacity": 50,
+            "disponible": true,
+            "ouvertureTime": "09:00:00",
+            "fermetureTime": "18:00:00"
+        }
+    ],
+
+    //result of get events
+    "events": [
+         {
+                "id": 2602,
+                "name": "test2",
+                "room": {
+                    "id": 402,
+                    "name": "Room Name",
+                    "roomCapacity": 50,
+                    "disponible": true,
+                    "ouvertureTime": "09:00:00",
+                    "fermetureTime": "18:00:00",
+                    "lastEventEndTime": 0
+                },
+                "activity": {
+                    "id": 202,
+                    "animators": [
+                        {
+                            "id": 253,
+                            "lastName": "Die",
+                            "firstName": "John",
+                            "role": "ANIMATOR",
+                            "firstChoice": "",
+                            "secondChoice": "",
+                            "thirdChoice": ""
+                        }
+                    ],
+                    "spectators": [
+                        {
+                            "id": 252,
+                            "lastName": "Doe",
+                            "firstName": "John",
+                            "role": "SPECTATOR",
+                            "firstChoice": "",
+                            "secondChoice": "",
+                            "thirdChoice": ""
+                        }
+                    ],
+                    "name": "yoga class"
+                },
+                "begin_time": null,
+                "end_time": null,
+                "duration": 60
+            },
+            {
+                "id": 2603,
+                "name": "test1",
+                "room": {
+                    "id": 402,
+                    "name": "Room Name",
+                    "roomCapacity": 50,
+                    "disponible": true,
+                    "ouvertureTime": "09:00:00",
+                    "fermetureTime": "18:00:00",
+                    "lastEventEndTime": 0
+                },
+                "activity": {
+                    "id": 202,
+                    "animators": [
+                        {
+                            "id": 253,
+                            "lastName": "Die",
+                            "firstName": "John",
+                            "role": "ANIMATOR",
+                            "firstChoice": "",
+                            "secondChoice": "",
+                            "thirdChoice": ""
+                        }
+                    ],
+                    "spectators": [
+                        {
+                            "id": 252,
+                            "lastName": "Doe",
+                            "firstName": "John",
+                            "role": "SPECTATOR",
+                            "firstChoice": "",
+                            "secondChoice": "",
+                            "thirdChoice": ""
+                        }
+                    ],
+                    "name": "yoga class"
+                },
+                "begin_time": null,
+                "end_time": null,
+                "duration": 60
+            }
+    ],
+    "parallel": true
+}
+
+Event{id='2602', name='test2', room=402, activity=yoga class, duration=60, startTime=09:00:00, endTime=10:00:00}
+Event{id='2603', name='test1', room=402, activity=yoga class, duration=60, startTime=10:00:00, endTime=11:00:00}

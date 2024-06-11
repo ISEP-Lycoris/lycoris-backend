@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/events")
+@RequestMapping("/event")
 public class EventController {
 
     private final EventService eventService;
@@ -61,37 +61,50 @@ public class EventController {
     @PostMapping
     public ResponseEntity<Event> createEvent(@RequestBody Map<String, Object> requestData) {
         try {
-            System.out.println("Request data: " + requestData); // Debugging statement
+            Long roomId = Long.parseLong(requestData.get("roomId").toString());
+            Long activityId = Long.parseLong(requestData.get("activityId").toString());
 
-            Long roomId = Long.parseLong(requestData.get("room_id").toString());
-            Long activityId = Long.parseLong(requestData.get("activity_id").toString());
-
-            System.out.println("Fetching room with ID: " + roomId); // Debugging statement
+            // Fetch room and activity
             Room room = roomService.getRoomById(roomId)
                     .orElseThrow(() -> new EntityNotFoundException("Room not found"));
-
-            System.out.println("Fetching activity with ID: " + activityId); // Debugging statement
             Activity activity = activityService.findActivityById(activityId)
                     .orElseThrow(() -> new EntityNotFoundException("Activity not found"));
 
             Event event = new Event();
-            event.setBegin_time(Time.valueOf(requestData.get("begin_time").toString()));
-            event.setEnd_time(Time.valueOf(requestData.get("end_time").toString()));
             event.setName(requestData.get("name").toString());
             event.setRoom(room);
             event.setActivity(activity);
 
-            System.out.println("Creating event: " + event); // Debugging statement
+            // Check if begin_time and end_time are provided
+            if (requestData.containsKey("beginTime") && requestData.get("beginTime") != null) {
+                event.setBegin_time(Time.valueOf(requestData.get("beginTime").toString()));
+            }
+            if (requestData.containsKey("endTime") && requestData.get("endTime") != null) {
+                event.setEnd_time(Time.valueOf(requestData.get("endTime").toString()));
+            }
+
+            // Set duration if both begin_time and end_time are null
+            if (event.getBegin_time() == null && event.getEnd_time() == null) {
+                Integer duration = Integer.parseInt(requestData.get("duration").toString());
+                event.setDuration(duration);
+            } else {
+                // Calculate duration based on begin_time and end_time
+                long durationMinutes = event.getEnd_time().toLocalTime().toSecondOfDay() / 60 - event.getBegin_time().toLocalTime().toSecondOfDay() / 60;
+                event.setDuration((int) durationMinutes);
+            }
+
             Event createdEvent = eventService.createEvent(event);
             return ResponseEntity.status(HttpStatus.CREATED).body(createdEvent);
         } catch (EntityNotFoundException e) {
-            e.printStackTrace(); // Print the stack trace for debugging
+            e.printStackTrace();
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         } catch (Exception e) {
-            e.printStackTrace(); // Print the stack trace for debugging
+            e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
         }
     }
+
+
 
 
 
