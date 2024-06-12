@@ -19,7 +19,7 @@ public class EventSchedulerTest {
         Time globalEndTime = Time.valueOf("17:00:00");
 
         List<Room> rooms = new ArrayList<>();
-        for (int i = 1; i <= 2; i++) {
+        for (int i = 1; i <= 10; i++) {
             Room room =new Room(i, "Salle " + i, 100);
             room.setOuvertureTime(globalBeginLocalTime);
             room.setFermetureTime(globalEndTime);
@@ -43,7 +43,7 @@ public class EventSchedulerTest {
 
 
         // Schedule events
-        EventScheduler.scheduleEvents(rooms, events,false);
+        EventScheduler.scheduleEvents(rooms, events,true);
 
         // Display scheduled events
         for (Room room : rooms) {

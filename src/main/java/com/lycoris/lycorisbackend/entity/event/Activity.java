@@ -18,26 +18,25 @@ public class Activity {
     @Column
     private Long id;
 
+    // Liste des animateurs pour l'activité
     @ManyToMany
-    private List<Person> animators;
+    private List<Person> animators = new ArrayList<>();
 
+    // Liste des spectateurs pour l'activité
     @ManyToMany
-    private List<Person> spectators;
+    private List<Person> spectators = new ArrayList<>();
 
+    // Nom de l'activité
     @Column
     private String name;
 
-
-
-
+    // Ajoute un animateur à la liste des animateurs
     public void addAnimator(Person animator) {
-        this.animators.add(animator);
+        animators.add(animator);
     }
 
+    // Ajoute un spectateur à la liste des spectateurs
     public void addSpectator(Person spectator) {
-        this.spectators.add(spectator);
+        spectators.add(spectator);
     }
-
-
-
 }
