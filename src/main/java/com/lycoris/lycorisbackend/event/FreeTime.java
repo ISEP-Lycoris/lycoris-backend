@@ -10,8 +10,8 @@ public class FreeTime {
     private List<Event> events = new ArrayList<Event>();
 
     public FreeTime(Time begin, Time end,Room room) {
-        this.begin = begin;
-        this.end = end;
+        this.begin = new Time (begin);
+        this.end = new Time (end);
         this.room = room;
     }
 
@@ -34,9 +34,12 @@ public class FreeTime {
     public void eventSetTime(){
         Time now = new Time(begin);
         for (Event event : events) {
-            event.setBegin(now);
+            if (event.getName().equals("Activité 35")){
+                int forpoint;
+            }
+            event.setBegin(new Time(now));
             now.addTime(event.getDuration());
-            event.setEnd(now);
+            event.setEnd(new Time(now));
             room.addEvent(event);
         }
     }

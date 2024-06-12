@@ -12,8 +12,8 @@ public class Event {
 
     //si salle spécifiée
     public Event(Time begin, Time end, Room room, String name, Activity activity) {
-        this.begin = begin;
-        this.end = end;
+        this.begin = new Time (begin);
+        this.end = new Time (end);
         this.room = room;
         this.name = name;
         this.activity = activity;
@@ -75,11 +75,11 @@ public class Event {
     }
 
     public void setBegin(Time begin) {
-        this.begin = begin;
+        this.begin = new Time(begin);
     }
 
     public void setEnd(Time end) {
-        this.end = end;
+        this.end = new Time (end);
     }
 
     public void setRoom(Room room) {

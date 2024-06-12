@@ -3,18 +3,20 @@ package com.lycoris.lycorisbackend.event;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.ListIterator;
 
-public class FreeTimes {
-    private List<FreeTime> freeTimes = new ArrayList<FreeTime>();;
+public class FreeTimesDuringSession {
+    private List<FreeTime> freeTimes = new ArrayList<FreeTime>();
+    ;
     private List<Event> events = new ArrayList<>();
     private Room room;
     private Time begin;
     private Time end;
 
-    public FreeTimes(Room room, Time begin, Time end) {
+    public FreeTimesDuringSession(Room room, Time begin, Time end) {
         this.room = room;
-        this.begin = begin;
-        this.end = end;
+        this.begin = new Time (begin);
+        this.end = new Time (end);
         addFreeTimes();
     }
 
@@ -25,6 +27,7 @@ public class FreeTimes {
     public List<FreeTime> getFreeTimes() {
         return freeTimes;
     }
+
     public Room getRoom() {
         return room;
     }
@@ -41,14 +44,14 @@ public class FreeTimes {
             }
         }
         if (hadFreeTime) {
-            if (open.size()==0) open.add(begin);
+            if (open.size() == 0) open.add(begin);
             open = duringTheSession(begin, end, open);
-            if (close.size()==0) close.add(end);
+            if (close.size() == 0) close.add(end);
             close = duringTheSession(begin, end, close);
 
-            addLimit(open,close);
+            addLimit(open, close);
             for (int k = 0; k < open.size(); k++) {
-                freeTimes.add(new FreeTime(open.get(k), close.get(k),room));
+                freeTimes.add(new FreeTime(open.get(k), close.get(k), room));
             }
         }
     }
@@ -56,22 +59,26 @@ public class FreeTimes {
     private List<Time> duringTheSession(Time begin, Time end, List<Time> times) {
         List<Time> result = new ArrayList<>();
 
-        for (Time time : times ) {
-            if(time.isAfter(begin) && time.isBefore(end)){
+        for (Time time : times) {
+            if (time.isAfter(begin) && time.isBefore(end)) {
                 result.add(time);
             }
         }
         return result;
     }
+
     private void addLimit(List<Time> open, List<Time> close) {
-        if (open.size() == 0 || close.size() == 0) {return;}
+        if (open.size() == 0 || close.size() == 0) {
+            return;
+        }
         if (open.get(0).isAfter(close.get(0))) {
-            open.add(0,begin);
+            open.add(0, begin);
         }
         if (open.get(0).isBefore(close.get(0))) {
             close.add(end);
         }
     }
+
     public boolean eventIsPossible(Event event) {
         List<Integer> openTime = new ArrayList<>();
         List<Integer> eventTime = new ArrayList<>();
@@ -99,7 +106,8 @@ public class FreeTimes {
         }
         return true;
     }
-    public void freeTimesUpdates(){
+
+    public void freeTimesUpdates() {
         freeTimes.clear();
         addFreeTimes();
     }
@@ -117,33 +125,46 @@ public class FreeTimes {
             result.add(events.get(i));
             events.remove(i);
         }
+        for (Event event : result){
+
+        }
         setTime(result);
     }
-
     public List<Integer> organizeLists(List<Integer> condition, List<Integer> toSort) {
-        Collections.sort(toSort);
+        Collections.sort(toSort, Collections.reverseOrder());
         List<Integer> result = new ArrayList<>();
-        int index = 0;
         for (int maxSum : condition) {
             int currentSum = 0;
-            while (index < toSort.size() && currentSum + toSort.get(index) <= maxSum) {
-                result.add(toSort.get(index));
-                currentSum += toSort.get(index);
-                index++;
+            ListIterator<Integer> iterator = toSort.listIterator();
+            while (iterator.hasNext()) {
+                int num = iterator.next();
+                if (currentSum + num <= maxSum) {
+                    result.add(num);
+                    currentSum += num;
+                    iterator.remove();
+                }
             }
         }
         return result;
     }
 
-    private void setTime(List<Event> events) {
+
+        private void setTime(List<Event> events) {
         for (FreeTime freeTime : freeTimes) {
             int duration = 0;
-            while (events.size()>0 && duration+events.get(0).getDuration() < freeTime.getDuration()) {
+            while (events.size() > 0 && duration + events.get(0).getDuration() <= freeTime.getDuration()) {
                 freeTime.addEvents(events.get(0));
                 duration += events.get(0).getDuration();
                 events.remove(0);
             }
             freeTime.eventSetTime();
         }
+    }
+
+    public int minutesLeft() {
+    int result = 0;
+    for (FreeTime freeTime : freeTimes) result+=freeTime.getDuration();
+    for (Event event : events) result -= event.getDuration();
+    return result;
     }
 }
